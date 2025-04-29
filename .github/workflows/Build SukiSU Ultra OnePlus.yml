@@ -320,14 +320,14 @@ jobs:
 
       - name: Make AnyKernel3
         run: |
-          git clone https://github.com/Numbersf/AnyKernel3 --depth=1
-          rm -rf ./AnyKernel3/.git
-
-          dir1="./kernel_workspace/kernel_platform/out/msm-kernel-${{ github.event.inputs.CPUD }}-${{ github.event.inputs.BUILD_METHOD }}/dist/"
-          dir2="./kernel_workspace/kernel_platform/common/out/arch/arm64/boot/"
-          dir3="./kernel_workspace/kernel_platform/out/msm-${{ github.event.inputs.CPUD }}-${{ github.event.inputs.CPUD }}-${{ github.event.inputs.BUILD_METHOD }}/dist/"
-          target1="./AnyKernel3/"
-          target2="./kernel_workspace/kernel"
+         if [ "${{ github.event.inputs.FEIL }}" = "oneplus_ace5_pro" ]; then
+          git clone -b a5p https://github.com/JiuGeFaCai/AnyKernel3.git --depth=1
+         else
+          git clone https://github.com/JiuGeFaCai/AnyKernel3.git --depth=1
+         fi
+         rm -rf ./AnyKernel3/.git
+         rm -rf ./AnyKernel3/push.sh
+         cp kernel_workspace/kernel_platform/dist/Image ./AnyKernel3/
 
           # 查找 Image 文件
           if find "$dir1" -name "Image" | grep -q "Image"; then
